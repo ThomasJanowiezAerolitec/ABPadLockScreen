@@ -26,6 +26,8 @@
 
 #define animationLength 0.15
 #define IS_IPHONE5 ([UIScreen mainScreen].bounds.size.height==568)
+#define IS_IPHONE6 ([UIScreen mainScreen].bounds.size.height==667)
+#define IS_IPHONE6P ([UIScreen mainScreen].bounds.size.height==736)
 #define IS_IOS6_OR_LOWER (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
 
 @interface ABPadLockScreenView()
@@ -77,6 +79,20 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+  CGFloat fontSizeCancelButton;
+  if (IS_IPHONE6P) {
+    ABPadButtonHeight = frame.size.height * 0.13;
+    fontSizeCancelButton = 20;
+  }
+  else if (IS_IPHONE6) {
+    ABPadButtonHeight = frame.size.height * 0.14;
+    fontSizeCancelButton = 20;
+  }
+  else {
+    ABPadButtonHeight = frame.size.height * 0.15;
+    fontSizeCancelButton = 15;
+  }
+  ABPadButtonWidth = ABPadButtonHeight;
     self = [super initWithFrame:frame];
     if (self)
     {
@@ -115,6 +131,7 @@
 		}
 		
 		_cancelButton = [UIButton buttonWithType:buttonType];
+      [_cancelButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:fontSizeCancelButton]];
         [_cancelButton setTitle:NSLocalizedString(@"Cancel", @"") forState:UIControlStateNormal];
 		_cancelButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         
@@ -491,7 +508,7 @@
 {
     button.frame = CGRectMake(left, top, ABPadButtonWidth, ABPadButtonHeight);
     [self.contentView addSubview:button];
-    [self setRoundedView:button toDiameter:75];
+    [self setRoundedView:button toDiameter:ABPadButtonHeight];
 }
 
 - (void)setUpPinSelectionView:(ABPinSelectionView *)selectionView left:(CGFloat)left top:(CGFloat)top

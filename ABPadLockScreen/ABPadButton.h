@@ -40,5 +40,5 @@
 
 @end
 
-extern CGFloat const ABPadButtonHeight;
-extern CGFloat const ABPadButtonWidth;
+extern CGFloat ABPadButtonHeight;
+extern CGFloat ABPadButtonWidth;
